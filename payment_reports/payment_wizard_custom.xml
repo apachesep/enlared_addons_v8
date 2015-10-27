@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="account_payment_wizard_view_extended" model="ir.ui.view">
+			<field name="name">account.voucher.form.view.extended</field>
+			<field name="model">account.voucher</field>
+			<field name="inherit_id" ref="account_voucher.view_vendor_receipt_dialog_form" />
+			<field name="arch" type="xml">
+                <xpath expr="//button[@name='button_proforma_voucher']" position="after">
+                    <button name="print_voucher" string="Register Payment and Print" type="object" class="oe_highlight"/>
+                </xpath>
+			</field>
+		</record>
+
+        <record id="account_customer_payment_view_extended" model="ir.ui.view">
+            <field name="name">account.voucher.customer.form.view.extended</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_receipt_dialog_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="invoice_number" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+	</data>
+</openerp>

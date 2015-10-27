@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="payment_report_template_id">
+			<t t-call="report.external_layout">
+				<div class="page">
+					<t t-foreach="docs" t-as="o">
+						<div class="row col-xs-12">
+							<div>
+                                <div class="col-xs-5 col-xs-offset-8">
+				                    <address t-field="o.partner_id"
+				                        t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}' />
+				                    <span t-field="o.partner_id.vat"/>
+				                </div>
+					            <h3>
+					                <span t-if="o.type == 'receipt'">Customer Payment: <span t-field="o.number"/></span>
+					                <span t-if="o.type == 'payment'">Supplier Payment: <span t-field="o.number"/></span>
+					            </h3>
+                                <br/>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 30%">Payment Date</th>
+                                            <th style="width: 30%">Tax Identification Number</th>
+                                            <th style="width: 30%">Amount Of Payment</th>
+                                            <th style="width: 30%">Invoice No</th>
+                                        </tr>
+                                        <tr>
+                                            <td><span t-field="o.date"/></td>
+                                            <td><span t-esc="get_tax(o)"/></td>
+                                            <td><span t-field="o.amount"/></td>
+                                            <td><span t-field="o.invoice_number"/></td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <br/><br/>
+								<table>
+                                    <tr>
+                                      <td style="width: 100%"><strong>Comments:</strong></td>
+                                    </tr>
+                                </table>
+							</div>
+						</div>
+			     	</t>
+				</div>
+			</t>
+		</template>
+
+		<template id="report_customer_supplier_payment">
+		    <t t-call="report.html_container">
+		        <t t-foreach="doc_ids" t-as="doc_id">
+		            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'payment_reports.payment_report_template_id')"/>
+		        </t>
+		    </t>
+		</template>
+
+	</data>
+</openerp>
